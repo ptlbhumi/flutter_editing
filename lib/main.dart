@@ -1,25 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/widgets/Fregmentholder.dart';
-import 'package:flutter_application_1/widgets/Myname.dart';
+import 'package:flutter_application_1/widgets/MyWidget.dart';
+import 'package:flutter_application_1/widgets/FetchData.dart';
+import 'package:flutter_application_1/widgets/MyWidgetWithState.dart';
+
+//hello
 
 void main() {
   runApp(
     MaterialApp(
       home: Scaffold(
+        body: MyWidgetWithState(),
         appBar: AppBar(
-          title: Text("Library Management"),
-          titleTextStyle: TextStyle(
-            color: const Color.fromARGB(255, 0, 0, 0),
-            fontSize: 24,
+          backgroundColor: Color.fromARGB(255, 56, 5, 119),
+          titleTextStyle: const TextStyle(
             fontWeight: FontWeight.bold,
+            color: Colors.white,
+            fontSize: 30,
           ),
-          backgroundColor: Color.fromARGB(255, 255, 255, 255),
-          centerTitle: true,
-        ),
-        body: FragmentHolder(
-          child: MyName(
-            name: "Never Miss your book Return date",
-          ),
+          foregroundColor: Colors.white,
+          title: Center(child: Text('Profile')),
         ),
       ),
     ),
