@@ -121,6 +121,9 @@ class _SplashscreenState extends State<Splashscreen> {
                   color: Colors.white,
                 ),
               ),
+
+             
+
               const Spacer(),
               const Padding(
                 padding: EdgeInsets.only(bottom: 20),

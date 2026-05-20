@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/splashscreen.dart';
+import 'package:flutter_application_1/widgets/splashscreen.dart';
 import 'package:flutter_application_1/widgets/MyWidget.dart';
 import 'package:flutter_application_1/widgets/MyWidgetWithState.dart';
 import 'package:flutter_application_1/widgets/Myname.dart';
@@ -7,6 +7,7 @@ import 'package:flutter_application_1/widgets/Screen1.dart';
 import 'package:flutter_application_1/widgets/FetchData.dart';
 import 'package:flutter_application_1/widgets/Screen2.dart';
 import 'package:flutter_application_1/widgets/Screen3.dart';
+import 'package:flutter_application_1/widgets/splashscreen.dart';
 
 class BookData {
 
@@ -97,7 +98,7 @@ class _FragmentHolderState extends State<FragmentHolder> {
 
               switch(settings.name){
                 case '/':
-                  builder = (BuildContext context) => const Screen1();
+                  builder = (BuildContext context) => const Splashscreen();
                   break;
                 case '/Screen2':
                   builder = (BuildContext context) => const Screen2();

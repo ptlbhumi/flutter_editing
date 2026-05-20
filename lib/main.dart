@@ -9,7 +9,7 @@ void main() {
   runApp(
     MaterialApp(
       home: Scaffold(
-        body: MyWidgetWithState(),
+        body: (),
         appBar: AppBar(
           backgroundColor: Color.fromARGB(255, 56, 5, 119),
           titleTextStyle: const TextStyle(
