@@ -1,40 +1,8 @@
 import 'package:flutter/material.dart';
 import 'AddBookPage.dart';
 import 'EditPage.dart';
+import 'fragmentholder.dart';
 
-void main() {
-  runApp(const MyApp());
-}
-
-/// ROOT APP
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: const Listing(),
-    );
-  }
-}
-
-/// MODEL CLASS
-class BookData {
-
-  String studentName;
-  String bookName;
-  DateTime dueDate;
-  bool isReturned;
-
-  BookData({
-    required this.studentName,
-    required this.bookName,
-    required this.dueDate,
-    this.isReturned = false,
-  });
-}
 
 /// DATE FORMATTER
 String formatDate(DateTime date) =>
@@ -246,7 +214,13 @@ class BookCard extends StatelessWidget {
 
 /// MAIN PAGE
 class Listing extends StatefulWidget {
-  const Listing({super.key});
+
+  final List<BookData> books;
+
+  const Listing({
+    super.key,
+    required this.books,
+  });
 
   @override
   State<Listing> createState() =>
@@ -263,175 +237,6 @@ class _ListingState
   final holidays = [
     DateTime(2026, 5, 27),
   ];
-
-  /// BOOK LIST
-  final List<BookData> books = [
-
-    BookData(
-      studentName: "Rahul",
-      bookName: "Flutter Basics",
-      dueDate: DateTime(2026, 5, 19),
-    ),
-
-    BookData(
-      studentName: "Priya",
-      bookName: "Dart Programming",
-      dueDate: DateTime(2026, 5, 19),
-    ),
-
-    BookData(
-      studentName: "Aman",
-      bookName: "Java",
-      dueDate: DateTime(2026, 5, 20),
-    ),
-    
-      BookData(
-      studentName: "Rahul",
-      bookName: "Flutter Basics",
-      dueDate: DateTime(2026, 5, 19),
-    ),
-
-    BookData(
-      studentName: "Priya",
-      bookName: "Dart Programming",
-      dueDate: DateTime(2026, 5, 19),
-    ),
-
-    /// 20 MAY
-    BookData(
-      studentName: "Aman",
-      bookName: "Java",
-      dueDate: DateTime(2026, 5, 20),
-    ),
-
-    /// 21 MAY
-    BookData(
-      studentName: "Sneha",
-      bookName: "Python",
-      dueDate: DateTime(2026, 5, 21),
-    ),
-
-    BookData(
-      studentName: "Karan",
-      bookName: "C Programming",
-      dueDate: DateTime(2026, 5, 21),
-    ),
-
-    BookData(
-      studentName: "Neha",
-      bookName: "DBMS",
-      dueDate: DateTime(2026, 5, 21),
-    ),
-
-    /// 22 MAY
-    BookData(
-      studentName: "Rohit",
-      bookName: "Machine Learning",
-      dueDate: DateTime(2026, 5, 22),
-    ),
-
-    BookData(
-      studentName: "Anjali",
-      bookName: "Operating System",
-      dueDate: DateTime(2026, 5, 22),
-    ),
-
-    BookData(
-      studentName: "Jay",
-      bookName: "AI Fundamentals",
-      dueDate: DateTime(2026, 5, 22),
-    ),
-
-    BookData(
-      studentName: "Pooja",
-      bookName: "Cyber Security",
-      dueDate: DateTime(2026, 5, 22),
-    ),
-
-    /// 23 MAY
-    BookData(
-      studentName: "Vikas",
-      bookName: "Cloud Computing",
-      dueDate: DateTime(2026, 5, 23),
-    ),
-
-    /// 24 MAY = SUNDAY (NO DATA)
-
-    /// 25 MAY
-    BookData(
-      studentName: "Meera",
-      bookName: "Computer Networks",
-      dueDate: DateTime(2026, 5, 25),
-    ),
-
-    BookData(
-      studentName: "Arjun",
-      bookName: "Data Structures",
-      dueDate: DateTime(2026, 5, 25),
-    ),
-
-    /// 26 MAY
-    BookData(
-      studentName: "Riya",
-      bookName: "Software Engineering",
-      dueDate: DateTime(2026, 5, 26),
-    ),
-
-    BookData(
-      studentName: "Dev",
-      bookName: "React Native",
-      dueDate: DateTime(2026, 5, 26),
-    ),
-
-    BookData(
-      studentName: "Tina",
-      bookName: "PHP",
-      dueDate: DateTime(2026, 5, 26),
-    ),
-
-    /// 27 MAY HOLIDAY (NO DATA)
-
-    /// 28 MAY
-    BookData(
-      studentName: "Yash",
-      bookName: "Laravel",
-      dueDate: DateTime(2026, 5, 28),
-    ),
-
-    /// 29 MAY
-    BookData(
-      studentName: "Krupa",
-      bookName: "Android Development",
-      dueDate: DateTime(2026, 5, 29),
-    ),
-
-    BookData(
-      studentName: "Harsh",
-      bookName: "iOS Development",
-      dueDate: DateTime(2026, 5, 29),
-    ),
-
-    BookData(
-      studentName: "Nidhi",
-      bookName: "Data Science",
-      dueDate: DateTime(2026, 5, 29),
-    ),
-
-    /// 30 MAY
-    BookData(
-      studentName: "Parth",
-      bookName: "Networking",
-      dueDate: DateTime(2026, 5, 30),
-    ),
-
-    BookData(
-      studentName: "Komal",
-      bookName: "UI/UX Design",
-      dueDate: DateTime(2026, 5, 30),
-    ),
-
-    /// 31 MAY = SUNDAY (NO DATA)
-  ];
   
 
   /// FILTER BOOKS
@@ -447,7 +252,7 @@ class _ListingState
       return [];
     }
 
-    return books.where((book) {
+    return widget.books.where((book) {
 
       return sameDate(
         book.dueDate,
@@ -499,20 +304,30 @@ class _ListingState
       floatingActionButton:
           FloatingActionButton(
 
-        child:
-            const Icon(Icons.add),
-
         /// NO ACTION
-        onPressed: () {
+        onPressed: ()  async{
           // Navigate to AddBookPage
-          Navigator.push(
+         final result = await Navigator.push(
             context,
             MaterialPageRoute(
               builder: (context) =>
                   const AddBookPage(),
             ),
           );
+
+          if (result != null) {
+            setState(() {
+              widget.books.add(
+                BookData(
+                  studentName: result['studentName'],
+                  bookName: result['bookName'],
+                  dueDate: result['dueDate'],
+                ),
+              );
+            });
+          }
         },
+        child: const Icon(Icons.add),
       ),
 
       body: Padding(
