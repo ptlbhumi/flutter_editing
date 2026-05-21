@@ -1,10 +1,12 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'widgets/fragmentholder.dart';
-import 'widgets/MyWidget.dart';
-import 'widgets/FetchData.dart';
-import 'widgets/Listing.dart';
-// removed import of non-existent file 'widgets/MyApp.dart'
+import 'package:flutter_application_1/widgets/MyWidget.dart';
+import 'package:flutter_application_1/widgets/FetchData.dart';
+import 'package:flutter_application_1/widgets/MyWidgetWithState.dart';
+import 'package:flutter_application_1/widgets/Myname.dart';
+import 'package:flutter_application_1/widgets/Listing.dart';
+import 'package:flutter_application_1/widgets/AddBookPage.dart';
+import 'package:flutter_application_1/widgets/EditPage.dart';
+import 'package:flutter_application_1/widgets/fragmentholder.dart';
 
 //hello
 
@@ -12,12 +14,20 @@ void main() {
   runApp(
     MaterialApp(
       home: Scaffold(
-        body: const FragmentHolder(
-          child: SizedBox(),
+        body: FragmentHolder(
+          child: MyWidget(),
+        ),
+        appBar: AppBar(
+          backgroundColor: Color.fromARGB(255, 56, 5, 119),
+          titleTextStyle: const TextStyle(
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+            fontSize: 30,
           ),
+          foregroundColor: Colors.white,
+          title: Center(child: Text('Library Management')),
+        ),
       ),
     ),
   );
 }
-
-

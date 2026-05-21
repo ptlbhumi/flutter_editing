@@ -6,7 +6,7 @@ import 'package:flutter_application_1/widgets/FetchData.dart';
 import 'package:flutter_application_1/widgets/Listing.dart';
 import 'package:flutter_application_1/widgets/AddBookPage.dart';
 import 'package:flutter_application_1/widgets/EditPage.dart';
-
+import 'package:flutter_application_1/widgets/splashscreen.dart';
 class BookData {
 
   String studentName;
@@ -220,6 +220,8 @@ class _FragmentHolderState extends State<FragmentHolder> {
 
               switch(settings.name){
                 case '/':
+                  builder = (BuildContext context) => Splashscreen();
+                case '/Listing':
                   builder = (BuildContext context) => Listing(
                        books: books,
                       );
