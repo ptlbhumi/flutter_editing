@@ -1,6 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-
+import 'widgets/fragmentholder.dart';
 import 'widgets/MyWidget.dart';
 import 'widgets/FetchData.dart';
 import 'widgets/Listing.dart';
@@ -12,7 +12,9 @@ void main() {
   runApp(
     MaterialApp(
       home: Scaffold(
-        body: Listing(),
+        body: const FragmentHolder(
+          child: SizedBox(),
+          ),
       ),
     ),
   );
