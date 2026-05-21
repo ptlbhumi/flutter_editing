@@ -13,7 +13,22 @@ void main() {
     MaterialApp(
       home: Scaffold(
         body: const FragmentHolder(
-          child: SizedBox(),
+          child: MyWidget()
+          ),
+          appBar: AppBar(
+            backgroundColor: const Color.fromARGB(255, 166, 11, 201),
+            titleTextStyle: const TextStyle(
+              color: Colors.white,
+              fontSize: 30,
+              fontWeight: FontWeight.bold,
+            ),
+            foregroundColor: Colors.white,
+            title: Center(
+              child: Text(
+                "Library Management ",
+                
+                ),
+              ),
           ),
       ),
     ),

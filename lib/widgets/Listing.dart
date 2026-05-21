@@ -293,12 +293,6 @@ class _ListingState
       backgroundColor:
           Colors.blue.shade50,
 
-      appBar: AppBar(
-        title: const Text(
-          "Library Management",
-        ),
-        centerTitle: true,
-      ),
 
       /// + BUTTON
       floatingActionButton:
