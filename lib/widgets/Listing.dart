@@ -78,7 +78,7 @@ class DateBox extends StatelessWidget {
               children: [
 
                 const Text(
-                  "Date",
+                  "Date:",
 
                   style: TextStyle(
                     fontWeight:
