@@ -304,20 +304,30 @@ class _ListingState
       floatingActionButton:
           FloatingActionButton(
 
-        child:
-            const Icon(Icons.add),
-
         /// NO ACTION
-        onPressed: () {
+        onPressed: ()  async{
           // Navigate to AddBookPage
-          Navigator.push(
+         final result = await Navigator.push(
             context,
             MaterialPageRoute(
               builder: (context) =>
                   const AddBookPage(),
             ),
           );
+
+          if (result != null) {
+            setState(() {
+              widget.books.add(
+                BookData(
+                  studentName: result['studentName'],
+                  bookName: result['bookName'],
+                  dueDate: result['dueDate'],
+                ),
+              );
+            });
+          }
         },
+        child: const Icon(Icons.add),
       ),
 
       body: Padding(
