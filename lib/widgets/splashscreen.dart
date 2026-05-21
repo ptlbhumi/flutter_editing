@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/widgets/Listing.dart';
 
 void main() {
   runApp(const MyApp());
@@ -32,10 +33,10 @@ class _SplashscreenState extends State<Splashscreen> {
   void initState() {
     super.initState();
     
-    Timer(const Duration(seconds: 10), () {
+    Future.delayed(const Duration(seconds: 3), () {
       Navigator.pushReplacement(
       context, MaterialPageRoute(
-          builder: (context) => const MyApp()));
+          builder: (context) => const Listing(books: [],)));
     });
   }
 
@@ -120,6 +121,22 @@ class _SplashscreenState extends State<Splashscreen> {
                   fontSize: 16,
                   color: Colors.white,
                 ),
+              ),
+
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pushReplacement(
+                    context, MaterialPageRoute(
+                      builder: (context) => const Listing(books: [],)));
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.white,
+                  foregroundColor: Colors.deepPurple,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                ),
+                child: const Text("Skip"),
               ),
 
              
