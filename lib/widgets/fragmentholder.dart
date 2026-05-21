@@ -7,6 +7,8 @@ import 'package:flutter_application_1/widgets/Listing.dart';
 import 'package:flutter_application_1/widgets/AddBookPage.dart';
 import 'package:flutter_application_1/widgets/EditPage.dart';
 import 'package:flutter_application_1/widgets/splashscreen.dart';
+
+
 class BookData {
 
   String studentName;
@@ -20,6 +22,15 @@ class BookData {
     required this.dueDate,
     this.isReturned = false,
   });
+
+  Map<String, dynamic> toMap() {
+    return {
+      'studentName': studentName,
+      'bookName': bookName,
+      'dueDate': dueDate.toIso8601String(),
+      'isReturned': isReturned,
+    };
+  }
 }
 
 
@@ -201,6 +212,20 @@ class _FragmentHolderState extends State<FragmentHolder> {
 
     /// 31 MAY = SUNDAY (NO DATA)
   ];
+
+  Future<void> SaveList() async {
+    try{
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      String jsonString = jsonEncode(books.map((book) => book.toMap()).toList());
+
+      await prefs.setString('books_saved', jsonString);
+
+      print('Book Updated Successfully!!!')
+    } catch(e){
+      print('Error saving book: $e');
+    }
+    // Implement your logic to save the list of books, e.g., using SharedPreferences or a local database.
+  }
   
 
   @override
@@ -220,7 +245,8 @@ class _FragmentHolderState extends State<FragmentHolder> {
 
               switch(settings.name){
                 case '/':
-                  builder = (BuildContext context) => Splashscreen();
+                  builder = (BuildContext context) => const Splashscreen();
+                  break;
                 case '/Listing':
                   builder = (BuildContext context) => Listing(
                        books: books,

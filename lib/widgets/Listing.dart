@@ -78,7 +78,7 @@ class DateBox extends StatelessWidget {
               children: [
 
                 const Text(
-                  "Date",
+                  "Date:",
 
                   style: TextStyle(
                     fontWeight:
@@ -114,10 +114,8 @@ class BookCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    
 
     return Card(
-      
 
       elevation: 4,
 
@@ -295,12 +293,6 @@ class _ListingState
       backgroundColor:
           Colors.blue.shade50,
 
-      appBar: AppBar(
-        title: const Text(
-          "Library Management",
-        ),
-        centerTitle: true,
-      ),
 
       /// + BUTTON
       floatingActionButton:
