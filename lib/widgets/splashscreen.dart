@@ -54,8 +54,9 @@ class _SplashscreenState extends State<Splashscreen> {
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
           colors: [
-            Color.fromARGB(255, 23, 18, 80),
-            Color.fromARGB(255, 73, 7, 124),
+              Color(0xFF311B92),
+              Color(0xFF6A1B9A),
+              Color(0xFF8E24AA),
           ],
         ),
         ),
@@ -99,7 +100,7 @@ class _SplashscreenState extends State<Splashscreen> {
               ),
               const SizedBox(height: 25),
               const Text(
-                "Library Management",
+                "Book Return Reminder",
                 style: TextStyle(
                   fontSize: 30,
                   fontWeight: FontWeight.bold,

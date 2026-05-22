@@ -159,21 +159,26 @@ class _EditPageState
 
               child: ElevatedButton(
 
-                onPressed: () {
-
-                  /// UPDATE VALUES
-                  widget.book.studentName =
-                      nameController.text;
-
-                  widget.book.bookName =
-                      bookController.text;
-
-                  widget.book.dueDate =
-                      selectedDate;
-
-                  Navigator.pop(
-                      context);
-                },
+                onPressed: () async {
+  BookData updatedBook =
+      BookData(
+    studentName:
+        nameController.text,
+    bookName:
+        bookController.text,
+    dueDate:
+        selectedDate,
+    isReturned:
+      widget.book.isReturned,
+  );
+  await widget.onEditBook(
+    updatedBook,
+  );
+  Navigator.pop(
+    context,
+    true,
+  );
+},
 
                 child: const Text(
                   "Update",

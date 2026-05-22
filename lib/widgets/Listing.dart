@@ -141,11 +141,11 @@ class BookCard extends StatelessWidget {
           radius: 30,
 
           backgroundColor:
-              Colors.indigo.shade100,
+              const Color(0xFFEDE7F6),
 
           child: const Icon(
             Icons.person,
-            color: Colors.indigo,
+            color: Color(0xFF5E35B1),
           ),
         ),
 
@@ -191,22 +191,30 @@ class BookCard extends StatelessWidget {
               ),
 
               /// NO ACTION
-              onPressed: () {
-
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-            builder: (context) => EditPage(
-            book: book,
-            onEditBook: (updatedBook) async {
-            await onEditBook(index, updatedBook);
-            },
+              onPressed: () async {
+                 final result =
+      await Navigator.push(
+    context,
+    MaterialPageRoute(
+      builder: (context) =>
+          EditPage(
+        book: book,
+        onEditBook:
+            (updatedBook) async {
+          await onEditBook(
+            index,
+            updatedBook,
+          );
+        },
       ),
     ),
   );
+  if (result == true) {
+    (context as Element)
+        .markNeedsBuild();
+  }
 },
             ),
-
             /// CHECKBOX
             Checkbox(
               value: book.isReturned,
@@ -376,10 +384,13 @@ child: const Icon(Icons.add),
                         filteredBooks[
                             index];
 
+                            final originalIndex =
+                        widget.books.indexOf(book);
+
                     return BookCard(
 
                       book: book,
-                      index: index,
+                      index: originalIndex,
                       onEditBook: widget.onEditBook,
 
                       onChanged:
