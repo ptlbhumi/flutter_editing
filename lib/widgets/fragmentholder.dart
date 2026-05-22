@@ -330,7 +330,7 @@ Future<void> editBook(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          MyName(name: "Never Miss your book Return date"),
+          MyName(name: "Never Miss Your Book Return Date"),
           Expanded(child: Navigator(
             initialRoute: '/',
             onGenerateRoute:(RouteSettings settings){

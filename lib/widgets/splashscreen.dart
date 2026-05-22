@@ -109,7 +109,7 @@ class _SplashscreenState extends State<Splashscreen> {
               ),
               const SizedBox(height: 10),
               const Text(
-                "Never Miss your book Return date",
+                "Never Miss Your Book Return Date",
                 style: TextStyle(
                   fontSize: 16,
                   color: Color.fromARGB(255, 248, 246, 246),
