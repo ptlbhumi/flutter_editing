@@ -32,7 +32,7 @@ class _AddBookPageState
   Widget build(BuildContext context) {
 
     return Scaffold(
-
+     
       appBar: AppBar(
         title: const Text(
           "Add New Entry",
@@ -43,6 +43,7 @@ class _AddBookPageState
         padding:
             const EdgeInsets.all(20),
 
+          child: SingleChildScrollView(
         child: Column(
           children: [
 
@@ -166,6 +167,7 @@ class _AddBookPageState
           ],
         ),
       ),
+    ),
     );
   }
 }

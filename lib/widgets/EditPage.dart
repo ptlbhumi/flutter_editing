@@ -63,6 +63,7 @@ class _EditPageState
         padding:
             const EdgeInsets.all(20),
 
+          child: SingleChildScrollView(
         child: Column(
           children: [
 
@@ -188,6 +189,7 @@ class _EditPageState
           ],
         ),
       ),
+    ),
     );
   }
 }

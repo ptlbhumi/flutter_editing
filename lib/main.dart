@@ -22,7 +22,7 @@ void main() {
     useMaterial3: true,
     primarySwatch: Colors.indigo,
     scaffoldBackgroundColor:
-        const Color.fromARGB(255, 70, 102, 176),
+        const Color.fromARGB(255, 233, 235, 239),
     appBarTheme: const AppBarTheme(
       backgroundColor:
           Color(0xFF4A148C),

@@ -13,7 +13,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 
 class BookData {
-
   String studentName;
   String bookName;
   DateTime dueDate;
@@ -30,15 +29,10 @@ class BookData {
   Map<String, dynamic> toJson() {
 
     return {
-
       'studentName': studentName,
-
       'bookName': bookName,
-
       'dueDate': dueDate.toIso8601String(),
-
       'isReturned': isReturned,
-
     };
   }
 
@@ -46,19 +40,13 @@ class BookData {
   factory BookData.fromJson(
     Map<String, dynamic> json,
   ) {
-
     return BookData(
-
       studentName: json['studentName'],
-
       bookName: json['bookName'],
-
       dueDate: DateTime.parse(
         json['dueDate'],
       ),
-
       isReturned: json['isReturned'],
-
     );
   }
 }
