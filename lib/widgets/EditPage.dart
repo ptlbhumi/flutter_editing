@@ -5,10 +5,11 @@ import 'fragmentholder.dart';
 class EditPage extends StatefulWidget {
 
   final BookData book;
-
+  final Function(BookData) onEditBook;
   const EditPage({
     super.key,
     required this.book,
+    required this.onEditBook, 
   });
 
   @override
@@ -62,6 +63,7 @@ class _EditPageState
         padding:
             const EdgeInsets.all(20),
 
+          child: SingleChildScrollView(
         child: Column(
           children: [
 
@@ -127,31 +129,23 @@ class _EditPageState
                     Icons.calendar_month,
                   ),
 
-                  onPressed:
-                      () async {
-
-                    DateTime? picked =
-                        await showDatePicker(
-                      context:
-                          context,
-                      initialDate:
-                          selectedDate,
-                      firstDate:
-                          DateTime(2020),
-                      lastDate:
-                          DateTime(2100),
-                    );
-
-                    if (picked !=
-                        null) {
-
-                      setState(() {
-
-                        selectedDate =
-                            picked;
-                      });
-                    }
-                  },
+                  onPressed: () async {
+  BookData updatedBook =
+      BookData(
+    studentName:
+        nameController.text,
+    bookName:
+        bookController.text,
+    dueDate:
+        selectedDate,
+    isReturned:
+    widget.book.isReturned,
+  );
+  await widget.onEditBook(
+    updatedBook,
+  );
+  Navigator.pop(context);
+},
                 ),
               ],
             ),
@@ -166,21 +160,26 @@ class _EditPageState
 
               child: ElevatedButton(
 
-                onPressed: () {
-
-                  /// UPDATE VALUES
-                  widget.book.studentName =
-                      nameController.text;
-
-                  widget.book.bookName =
-                      bookController.text;
-
-                  widget.book.dueDate =
-                      selectedDate;
-
-                  Navigator.pop(
-                      context);
-                },
+                onPressed: () async {
+  BookData updatedBook =
+      BookData(
+    studentName:
+        nameController.text,
+    bookName:
+        bookController.text,
+    dueDate:
+        selectedDate,
+    isReturned:
+      widget.book.isReturned,
+  );
+  await widget.onEditBook(
+    updatedBook,
+  );
+  Navigator.pop(
+    context,
+    true,
+  );
+},
 
                 child: const Text(
                   "Update",
@@ -190,6 +189,7 @@ class _EditPageState
           ],
         ),
       ),
+    ),
     );
   }
 }

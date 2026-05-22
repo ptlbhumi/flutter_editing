@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/widgets/Listing.dart';
+import 'package:flutter_application_1/widgets/fragmentholder.dart';
 
 void main() {
   runApp(const MyApp());
@@ -32,12 +34,15 @@ class _SplashscreenState extends State<Splashscreen> {
   void initState() {
     super.initState();
     
-    Timer(const Duration(seconds: 10), () {
-      Navigator.pushReplacement(
-      context, MaterialPageRoute(
-          builder: (context) => const MyApp()));
-    });
-  }
+    Future.delayed(const Duration(seconds: 3), () {
+      Navigator.pushReplacementNamed(
+  context,
+  '/Listing',
+);
+  });
+          
+    }
+
 
   @override
   Widget build(BuildContext context) {
@@ -49,8 +54,9 @@ class _SplashscreenState extends State<Splashscreen> {
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
           colors: [
-            Color.fromARGB(255, 23, 18, 80),
-            Color.fromARGB(255, 73, 7, 124),
+              Color(0xFF311B92),
+              Color(0xFF6A1B9A),
+              Color(0xFF8E24AA),
           ],
         ),
         ),
@@ -94,7 +100,7 @@ class _SplashscreenState extends State<Splashscreen> {
               ),
               const SizedBox(height: 25),
               const Text(
-                "Library Management",
+                "Book Return Reminder",
                 style: TextStyle(
                   fontSize: 30,
                   fontWeight: FontWeight.bold,
@@ -103,7 +109,7 @@ class _SplashscreenState extends State<Splashscreen> {
               ),
               const SizedBox(height: 10),
               const Text(
-                "Never Miss your book Return date",
+                "Never Miss Your Book Return Date",
                 style: TextStyle(
                   fontSize: 16,
                   color: Color.fromARGB(255, 248, 246, 246),
@@ -121,9 +127,6 @@ class _SplashscreenState extends State<Splashscreen> {
                   color: Colors.white,
                 ),
               ),
-
-             
-
               const Spacer(),
               const Padding(
                 padding: EdgeInsets.only(bottom: 20),

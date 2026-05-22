@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/widgets/MyWidget.dart';
 import 'package:flutter_application_1/widgets/MyWidgetWithState.dart';
@@ -7,8 +9,10 @@ import 'package:flutter_application_1/widgets/Listing.dart';
 import 'package:flutter_application_1/widgets/AddBookPage.dart';
 import 'package:flutter_application_1/widgets/EditPage.dart';
 import 'package:flutter_application_1/widgets/splashscreen.dart';
-class BookData {
+import 'package:shared_preferences/shared_preferences.dart';
 
+
+class BookData {
   String studentName;
   String bookName;
   DateTime dueDate;
@@ -20,6 +24,31 @@ class BookData {
     required this.dueDate,
     this.isReturned = false,
   });
+
+  /// CONVERT OBJECT TO JSON
+  Map<String, dynamic> toJson() {
+
+    return {
+      'studentName': studentName,
+      'bookName': bookName,
+      'dueDate': dueDate.toIso8601String(),
+      'isReturned': isReturned,
+    };
+  }
+
+  /// CONVERT JSON TO OBJECT
+  factory BookData.fromJson(
+    Map<String, dynamic> json,
+  ) {
+    return BookData(
+      studentName: json['studentName'],
+      bookName: json['bookName'],
+      dueDate: DateTime.parse(
+        json['dueDate'],
+      ),
+      isReturned: json['isReturned'],
+    );
+  }
 }
 
 
@@ -33,6 +62,13 @@ class FragmentHolder extends StatefulWidget {
 }
 
 class _FragmentHolderState extends State<FragmentHolder> {
+
+  @override
+    void initState() {
+    super.initState();
+  
+    PreparedList();
+}
 
   final List<BookData> books = [
 
@@ -201,7 +237,89 @@ class _FragmentHolderState extends State<FragmentHolder> {
 
     /// 31 MAY = SUNDAY (NO DATA)
   ];
+
   
+  Future<void> SaveList() async {
+
+  try {
+    final SharedPreferences prefs =
+        await SharedPreferences.getInstance();
+
+    String jsonString = jsonEncode(
+      books.map(
+        (item) => item.toJson(),
+      ).toList(),
+    );
+
+    await prefs.setString(
+      'Updated_List',
+      jsonString,
+    );
+    print(
+      'List Successfully Saved!',
+    );
+  } catch (e) {
+    print(
+      'Error Saving List: $e',
+    );
+  }
+}
+      Future<void> addBook(
+  BookData book,
+) async {
+  setState(() {
+    books.add(book);
+  });
+  await SaveList();
+}
+
+Future<void> editBook(
+  int index,
+  BookData updatedBook,
+) async {
+  if (index >= 0 &&
+      index < books.length) {
+    setState(() {
+      books[index] =
+          updatedBook;
+    });
+    await SaveList();
+    print(
+      'Book Updated Successfully!',
+    );
+  }
+}
+  
+   Future<void> PreparedList() async {
+  try {
+    final SharedPreferences prefs =
+        await SharedPreferences.getInstance();
+
+    String? jsonString =
+        prefs.getString(
+      'Updated_List',
+    );
+
+    if (jsonString == null) {
+      return;
+    }
+    List<dynamic> jsonList =
+        jsonDecode(jsonString);
+    setState(() {
+      books.clear();
+      books.addAll(
+        jsonList.map(
+          (item) => BookData.fromJson(item),
+        ),
+      );
+    });
+  } catch (e) {
+
+    print(
+      'Error Loading List: $e',
+    );
+  }
+}
 
   @override
   Widget build(BuildContext context) {
@@ -212,7 +330,7 @@ class _FragmentHolderState extends State<FragmentHolder> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          MyName(name: "Never Miss your book Return date"),
+          MyName(name: "Never Miss Your Book Return Date"),
           Expanded(child: Navigator(
             initialRoute: '/',
             onGenerateRoute:(RouteSettings settings){
@@ -220,23 +338,34 @@ class _FragmentHolderState extends State<FragmentHolder> {
 
               switch(settings.name){
                 case '/':
-                  builder = (BuildContext context) => Splashscreen();
+                  builder = (BuildContext context) => const Splashscreen();
+                  break;
                 case '/Listing':
                   builder = (BuildContext context) => Listing(
                        books: books,
+                       onEditBook: editBook,
+                        onAddBook: addBook,
                       );
                   break;
                 case '/AddBook':
-                  builder = (BuildContext context) => const AddBookPage();
+                  builder = (BuildContext context) => AddBookPage(
+                    onAddBook: addBook,
+                  );
                   break;
                 case '/EditBook':
                   builder = (BuildContext context) => EditPage(
-                  book: BookData(
+                  book:
+                  
+                   BookData(
                    studentName: "",
                    bookName: "",
                    dueDate: DateTime.now(),
             ),
+            onEditBook: (updatedBook) async {
+            await editBook(0, updatedBook);
+            },
     );
+    break;
                 default:
                 builder = (BuildContext context) => const Scaffold(
                   body: Center(
