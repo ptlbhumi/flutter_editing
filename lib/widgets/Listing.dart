@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'AddBookPage.dart';
-import 'EditPage.dart';
-import 'fragmentholder.dart';
+import 'package:flutter_application_1/widgets/AddBookPage.dart';
+import 'package:flutter_application_1/widgets/fragmentholder.dart';
+import 'package:flutter_application_1/widgets/EditPage.dart';
 
 
 /// DATE FORMATTER
@@ -105,11 +105,15 @@ class BookCard extends StatelessWidget {
 
   final BookData book;
   final Function(bool?) onChanged;
+  final Function(int, BookData) onEditBook;
+  final int index;
 
   const BookCard({
     super.key,
     required this.book,
     required this.onChanged,
+    required this.onEditBook,
+    required this.index,
   });
 
   @override
@@ -194,6 +198,9 @@ class BookCard extends StatelessWidget {
             MaterialPageRoute(
             builder: (context) => EditPage(
             book: book,
+            onEditBook: (updatedBook) async {
+            await onEditBook(index, updatedBook);
+            },
       ),
     ),
   );
@@ -216,10 +223,14 @@ class BookCard extends StatelessWidget {
 class Listing extends StatefulWidget {
 
   final List<BookData> books;
+  final Function(int, BookData) onEditBook;
+  final Function(BookData) onAddBook;
 
   const Listing({
     super.key,
     required this.books,
+    required this.onEditBook,
+    required this.onAddBook,
   });
 
   @override
@@ -297,31 +308,19 @@ class _ListingState
       /// + BUTTON
       floatingActionButton:
           FloatingActionButton(
-
-        /// NO ACTION
-        onPressed: ()  async{
-          // Navigate to AddBookPage
-         final result = await Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) =>
-                  const AddBookPage(),
-            ),
-          );
-
-          if (result != null) {
-            setState(() {
-              widget.books.add(
-                BookData(
-                  studentName: result['studentName'],
-                  bookName: result['bookName'],
-                  dueDate: result['dueDate'],
-                ),
-              );
-            });
-          }
-        },
-        child: const Icon(Icons.add),
+            onPressed: () async {
+  await Navigator.push(
+    context,
+    MaterialPageRoute(
+      builder: (context) => AddBookPage(
+        onAddBook:
+            widget.onAddBook,
+      ),
+    ),
+  );
+  setState(() {});
+},
+child: const Icon(Icons.add),
       ),
 
       body: Padding(
@@ -380,6 +379,8 @@ class _ListingState
                     return BookCard(
 
                       book: book,
+                      index: index,
+                      onEditBook: widget.onEditBook,
 
                       onChanged:
                           (value) {

@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
 import 'fragmentholder.dart';
   class AddBookPage extends StatefulWidget {
-  const AddBookPage({super.key});
+
+  final Function(BookData) onAddBook;
+
+  const AddBookPage({
+    super.key,
+    required this.onAddBook,
+  });
 
   @override
   State<AddBookPage> createState() =>
@@ -102,34 +108,24 @@ class _AddBookPageState
                     Icons.calendar_month,
                   ),
 
-                  onPressed:
-                      () async {
+                  onPressed: () async {
+                    final pickedDate =
+      await showDatePicker(
+    context: context,
+    initialDate: selectedDate,
+    firstDate: DateTime(2020),
+    lastDate: DateTime(2100),
+  );
 
-                    final picked =
-                        await showDatePicker(
-                      context:
-                          context,
+  if (pickedDate != null) {
 
-                      initialDate:
-                          selectedDate,
+    setState(() {
 
-                      firstDate:
-                          DateTime(2020),
+      selectedDate = pickedDate;
 
-                      lastDate:
-                          DateTime(2100),
-                    );
-
-                    if (picked !=
-                        null) {
-
-                      setState(() {
-
-                        selectedDate =
-                            picked;
-                      });
-                    }
-                  },
+    });
+  }
+}
                 ),
               ],
             ),
@@ -143,34 +139,23 @@ class _AddBookPageState
               width: double.infinity,
 
               child: ElevatedButton(
-
-                onPressed: () {
-
-                  if (nameController
-                          .text
-                          .isNotEmpty &&
-                      bookController
-                          .text
-                          .isNotEmpty) {
-
-                    Navigator.pop(
-                      context,
-
-                      {
-                        "studentName":
-                            nameController
-                                .text,
-
-                        "bookName":
-                            bookController
-                                .text,
-
-                        "dueDate":
-                            selectedDate,
-                      },
-                    );
-                  }
-                },
+                onPressed: () async {
+  if (nameController.text.isNotEmpty &&
+      bookController.text.isNotEmpty) {
+    BookData newBook = BookData(
+      studentName:
+          nameController.text,
+      bookName:
+          bookController.text,
+      dueDate:
+          selectedDate,
+    );
+    await widget.onAddBook(
+      newBook,
+    );
+    Navigator.pop(context);
+  }
+},
 
                 child:
                     const Text(
